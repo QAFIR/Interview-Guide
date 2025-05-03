@@ -24,25 +24,28 @@ import { useRouter } from "next/navigation";
 
 const AddNewInterview = () => {
   const [openDailog, setOpenDialog] = useState(false);
-  const [jobPosition, setJobPosition] = useState();
-  const [jobDesc, setJobDesc] = useState();
-  const [jobExperience, setJobExperience] = useState();
+  const [jobPosition, setJobPosition] = useState("");
+  const [jobDesc, setJobDesc] = useState("");
+  const [jobExperience, setJobExperience] = useState("");
+  const [numQuestions, setNumQuestions] = useState(5); // new state for number of questions
   const [loading, setLoading] = useState(false);
   const [jsonResponse, setJsonResponse] = useState([]);
-  const { user } = useUser(); //imports from clerk
+  const { user } = useUser(); // imports from clerk
   const router = useRouter();
 
   const onSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
-    console.log(jobPosition, jobDesc, jobExperience);
+    setLoading(true);
+    console.log(jobPosition, jobDesc, jobExperience, numQuestions);
 
     const InputPrompt = `
   Job Positions: ${jobPosition}, 
   Job Description: ${jobDesc}, 
-  Years of Experience: ${jobExperience}. 
-  Based on this information, please provide 5 interview questions with answers in JSON format, ensuring "Question" and "Answer" are fields in the JSON.`;
-
+  Years of Experience: ${jobExperience}, 
+  Number of Questions: ${numQuestions}. 
+  Based on this information, please provide ${numQuestions} interview questions with answers in JSON format, ensuring "Question" and "Answer" are fields in the JSON.
+    `;
+    
     const result = await chatSession.sendMessage(InputPrompt);
     const MockJsonResp = result.response
       .text()
@@ -50,7 +53,6 @@ const AddNewInterview = () => {
       .replace("```", "")
       .trim();
     console.log(JSON.parse(MockJsonResp));
-//     // const parsedResp = MockJsonResp
     setJsonResponse(MockJsonResp);
 
     if (MockJsonResp) {
@@ -76,7 +78,7 @@ const AddNewInterview = () => {
     } else {
       console.log("ERROR");
     }
-     setLoading(false);
+    setLoading(false);
   };
 
   return (
@@ -91,32 +93,31 @@ const AddNewInterview = () => {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle className="text-2xl">
-              Tell us more about your job interviwing
+              Tell us more about your Job Interview
             </DialogTitle>
             <DialogDescription>
               <form onSubmit={onSubmit}>
                 <div className="my-3">
                   <h2>
-                    Add Details about your job position, job descritpion and
-                    years of experience
+                    Add Details about your job position, job description, years
+                    of experience and desired number of questions
                   </h2>
-
                   <div className="mt-7 my-3">
-                    <label className="text-black">Job Role/job Position</label>
+                    <label className="text-black">Job Role/Job Position</label>
                     <Input
                       className="mt-1"
-                      placeholder="Ex. Full stack Developer"
+                      placeholder="Ex. Full Stack Developer"
                       required
                       onChange={(e) => setJobPosition(e.target.value)}
                     />
                   </div>
                   <div className="my-5">
                     <label className="text-black">
-                      Job Description/ Tech stack (In Short)
+                      Job Description/Tech Stack (In Short)
                     </label>
                     <Textarea
                       className="placeholder-opacity-50"
-                      placeholder="Ex. React, Angular, Nodejs, Mysql, Nosql, Python"
+                      placeholder="Ex. React, Angular, Nodejs, MySQL, NoSQL, Python"
                       required
                       onChange={(e) => setJobDesc(e.target.value)}
                     />
@@ -126,15 +127,28 @@ const AddNewInterview = () => {
                     <Input
                       className="mt-1"
                       placeholder="Ex. 5"
-                      max="50"
                       type="number"
                       required
                       onChange={(e) => setJobExperience(e.target.value)}
                     />
                   </div>
+                  <div className="my-5">
+                    <label className="text-black">Number of Questions</label>
+                    <Input
+                      className="mt-1"
+                      placeholder="Ex. 5"
+                      type="number"
+                      required
+                      min={1}
+                      onChange={(e) =>
+                        setNumQuestions(Number(e.target.value))
+                      }
+                      value={numQuestions}
+                    />
+                  </div>
                 </div>
                 <div className="flex gap-5 justify-end">
-                <Button
+                  <Button
                     type="button"
                     variant="ghost"
                     className="cursor-pointer"

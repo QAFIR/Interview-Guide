@@ -26,8 +26,8 @@ function Interview({params}) {
           .select()
           .from(MockInterview)
           .where(eq(MockInterview.mockId, params.interviewId));
-          
-        setInterviewData(result[0]);
+
+;        setInterviewData(result[0]);
       };
 
 
@@ -52,7 +52,7 @@ function Interview({params}) {
           </div>
           <div className="p-5 border rounded-lg border-yellow-300 bg-yellow-100">
             <h2 className="flex gap-2 items-center text-yellow-700 mb-2">
-              <Lightbulb />
+              <Lightbulb/>
               <strong>Information</strong>
             </h2>
             <h2 className="mt-3 text-yellow-500">
@@ -78,6 +78,7 @@ function Interview({params}) {
           )}
           <div>
             <Button
+              variant="ghost"
               className={`${webCamEnabled ? "w-full" : "w-full"}`}
               onClick={() => setWebCamEnabled((prev) => !prev)}
             >

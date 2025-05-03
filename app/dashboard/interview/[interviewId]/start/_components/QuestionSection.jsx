@@ -19,7 +19,7 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
               <h2
                 className={`p-2  rounded-full text-center text-xs md:text-sm cursor-pointer md:block hidden ${
                   activeQuestionIndex == index
-                    ? "bg-black text-white"
+                    ? "bg-primary text-white"
                     : "bg-secondary"
                 }`}
               >

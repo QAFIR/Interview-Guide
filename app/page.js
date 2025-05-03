@@ -75,15 +75,15 @@ const page = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
               {[
                 {
-                  title: "AI Mock Interviews",
-                  desc: "Experience realistic interview scenarios with our advanced AI."
+                  title: "Customisable Interviews",
+                  desc: "Tailor your mock interviews to match your desired job role and experience level."
                 },
                 {
-                  title: "Instant Feedback",
+                  title: "AI-Powered Feedback",
                   desc: "Get instant, personalized feedback to improve your performance."
                 },
                 {
-                  title: "Comprehensive Reports",
+                  title: "Detailed Reports",
                   desc: "Receive detailed reports highlighting your strengths and weaknesses."
                 }
               ].map((feature, idx) => (
@@ -107,7 +107,7 @@ const page = () => {
                   quote: "I really loved this. The questions asked were entirely relevant to the Job Role. And the suggestions and feedbacks were quite helpful."
                 },
                 {
-                  name: "Sarah Williams",
+                  name: "Abhiman Singh",
                   quote: "The feedback was spot on and helped me improve my answers. Highly recommend this service!"
                 }
               ].map((t, idx) => (
